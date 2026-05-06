@@ -2,12 +2,10 @@
 // MenuSection.astro — Three card styles: graph paper, index card, dark card
 import InkBlot from './svg/InkBlot.astro';
 import Smudge from './svg/Smudge.astro';
-import TornEdge from './svg/TornEdge.astro';
 import menuData from '../data/menu.json';
 ---
 
 <section id="menu" class="section section-dark menu-section">
-  <TornEdge direction="top" fill="var(--paper-white)" />
   <div class="menu-container">
     <h2 class="menu-title heading-tilt-right tear-in">
       <span class="menu-label font-mono">// meniu</span>
@@ -68,7 +66,6 @@ import menuData from '../data/menu.json';
       </div>
     </div>
   </div>
-  <TornEdge direction="bottom" fill="var(--paper-white)" />
 </section>
 
 <style>
