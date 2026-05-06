@@ -1,0 +1,182 @@
+---
+// LocationSection.astro — Dark map, address, hours, CTA
+import TornEdge from './svg/TornEdge.astro';
+import CoffeeCupPin from './svg/CoffeeCupPin.astro';
+---
+
+<section id="location" class="section section-dark location-section">
+  <TornEdge direction="top" fill="var(--paper-white)" />
+  <div class="location-container">
+    <h2 class="location-title heading-tilt-right tear-in">
+      <span class="location-label font-mono">// locație</span>
+      Ne găsești aici.
+    </h2>
+
+    <div class="location-grid">
+      <!-- Map -->
+      <div class="location-map-wrapper tear-in">
+        <div class="map-container" id="nervosa-map">
+          <!-- MapLibre renders here; fallback static content -->
+          <div class="map-fallback" id="map-fallback">
+            <CoffeeCupPin class="map-pin-fallback" />
+            <p class="font-mono" style="color: var(--ash); font-size: 0.8rem;">
+              Cluj-Napoca, România<br/>46.7712°N, 23.6236°E
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="location-info">
+        <!-- Address -->
+        <div class="location-address tear-in">
+          <h3 class="info-heading font-heading">Adresă</h3>
+          <p class="info-text">
+            Strada Exemplu 42<br/>
+            Cluj-Napoca 400000<br/>
+            România
+          </p>
+          <a
+            href="https://maps.google.com/?q=46.7712,23.6236"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-nervosa location-cta"
+          >
+            Rătăcește-te pe drum →
+          </a>
+        </div>
+
+        <!-- Hours (sticky note) -->
+        <div class="sticky-note location-hours tear-in">
+          <h3 class="info-heading font-heading" style="margin-top:0">Program</h3>
+          <div class="hours-grid">
+            <span class="font-mono hours-day">Luni – Vineri</span>
+            <span class="font-heading hours-time">07:30 – 22:00</span>
+            <span class="font-mono hours-day">Sâmbătă – Duminică</span>
+            <span class="font-heading hours-time">09:00 – 23:00</span>
+          </div>
+        </div>
+
+        <!-- Vibe copy -->
+        <div class="location-vibe tear-in">
+          <p class="vibe-text">
+            Un colț liniștit cu muzică bună, lumină caldă și cafea care te face să vrei să rămâi. 
+            Nu suntem perfecți, dar suntem sinceri. Vino cum ești — nimeni nu judecă aici.
+          </p>
+          <p class="vibe-translation font-mono">
+            A quiet corner with good music, warm light, and coffee that makes you want to stay. 
+            We're not perfect, but we're honest. Come as you are.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .location-section { position: relative; padding: var(--space-3xl) var(--space-lg); }
+  .location-container { max-width: 1000px; margin: 0 auto; }
+  .location-title { font-size: clamp(2rem, 5vw, 3.5rem); color: var(--paper-white); margin-bottom: var(--space-xl); }
+  .location-label { display: block; font-size: 0.65rem; color: var(--ash); letter-spacing: 0.15em; margin-bottom: var(--space-xs); }
+
+  .location-grid { display: grid; gap: var(--space-xl); }
+  @media (min-width: 768px) { .location-grid { grid-template-columns: 1.2fr 1fr; } }
+
+  .location-map-wrapper { position: relative; }
+  .map-container { position: relative; overflow: hidden; border-radius: 2px; }
+  .map-fallback { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 400px; background: linear-gradient(135deg, #1a1814 0%, #2a2520 100%); gap: var(--space-md); }
+
+  .location-info { display: flex; flex-direction: column; gap: var(--space-xl); }
+  .info-heading { font-size: 1.2rem; color: var(--sepia); margin: 0 0 var(--space-sm); }
+  .info-text { color: rgba(var(--paper-white-rgb), 0.8); line-height: 1.8; margin: 0 0 var(--space-md); }
+
+  .location-cta { margin-top: var(--space-sm); }
+
+  .location-hours { transform: rotate(-2deg); }
+  .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-xs) var(--space-md); }
+  .hours-day { font-size: 0.75rem; color: var(--ash); }
+  .hours-time { font-size: 0.95rem; color: var(--deep-black); }
+
+  .vibe-text { color: rgba(var(--paper-white-rgb), 0.7); font-style: italic; line-height: 1.8; margin: 0 0 var(--space-sm); }
+  .vibe-translation { font-size: 0.7rem; color: var(--ash); letter-spacing: 0.06em; }
+
+  @media (max-width: 768px) {
+    .location-section { padding: var(--space-2xl) var(--space-md); }
+    .map-fallback { height: 280px; }
+  }
+</style>
+
+<script>
+  // MapLibre GL integration (loads dynamically)
+  async function initMap() {
+    try {
+      const maplibregl = await import('maplibre-gl');
+      const container = document.getElementById('nervosa-map');
+      const fallback = document.getElementById('map-fallback');
+      if (!container) return;
+
+      // Create a map div inside container
+      const mapDiv = document.createElement('div');
+      mapDiv.style.width = '100%';
+      mapDiv.style.height = '400px';
+      container.insertBefore(mapDiv, fallback);
+      if (fallback) fallback.style.display = 'none';
+
+      const map = new maplibregl.Map({
+        container: mapDiv,
+        style: {
+          version: 8,
+          sources: {
+            'osm-tiles': {
+              type: 'raster',
+              tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+              tileSize: 256,
+              attribution: '© OpenStreetMap contributors',
+            },
+          },
+          layers: [{
+            id: 'osm-tiles',
+            type: 'raster',
+            source: 'osm-tiles',
+            minzoom: 0,
+            maxzoom: 19,
+          }],
+        },
+        center: [23.6236, 46.7712], // Cluj-Napoca
+        zoom: 15,
+        attributionControl: false,
+      });
+
+      // Custom marker (simple)
+      const markerEl = document.createElement('div');
+      markerEl.innerHTML = `<svg width="36" height="48" viewBox="0 0 48 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 22 L12 48 C12 52 36 52 36 48 L40 22 Z" stroke="#f5f0e8" stroke-width="2" fill="#1a1814"/>
+        <path d="M40 28 C48 28 48 40 40 40" stroke="#f5f0e8" stroke-width="2" fill="none"/>
+        <ellipse cx="24" cy="22" rx="16" ry="3" stroke="#f5f0e8" stroke-width="2" fill="#1a1814"/>
+        <ellipse cx="24" cy="24" rx="13" ry="2" fill="#c9a96e" opacity="0.6"/>
+        <path d="M24 52 L24 62" stroke="#f5f0e8" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="24" cy="63" r="1.5" fill="#c9a96e"/>
+      </svg>`;
+
+      new maplibregl.Marker({ element: markerEl })
+        .setLngLat([23.6236, 46.7712])
+        .addTo(map);
+
+    } catch (e) {
+      // Fallback remains visible
+      console.log('Map init skipped:', e);
+    }
+  }
+
+  // Lazy-load map on intersection
+  const mapSection = document.getElementById('location');
+  if (mapSection) {
+    const io = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        initMap();
+        io.disconnect();
+      }
+    }, { threshold: 0.1 });
+    io.observe(mapSection);
+  }
+</script>

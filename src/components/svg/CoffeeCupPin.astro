@@ -1,0 +1,69 @@
+---
+// CoffeeCupPin.astro — Map pin shaped like a coffee cup with animated steam
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<svg
+  class={`scribble ${className}`}
+  width="48"
+  height="64"
+  viewBox="0 0 48 64"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  <!-- Steam lines -->
+  <path class="steam steam-1" d="M16 18 C16 14 20 12 18 6" stroke="var(--sepia)" stroke-width="1.5" stroke-linecap="round" />
+  <path class="steam steam-2" d="M24 16 C24 12 28 10 26 4" stroke="var(--sepia)" stroke-width="1.5" stroke-linecap="round" />
+  <path class="steam steam-3" d="M32 18 C32 14 28 12 30 6" stroke="var(--sepia)" stroke-width="1.5" stroke-linecap="round" />
+  
+  <!-- Cup body -->
+  <path
+    d="M8 22 L12 48 C12 52 36 52 36 48 L40 22 Z"
+    stroke="var(--paper-white)"
+    stroke-width="2"
+    fill="var(--deep-black)"
+  />
+  
+  <!-- Cup handle -->
+  <path
+    d="M40 28 C48 28 48 40 40 40"
+    stroke="var(--paper-white)"
+    stroke-width="2"
+    fill="none"
+  />
+  
+  <!-- Cup rim -->
+  <ellipse cx="24" cy="22" rx="16" ry="3" stroke="var(--paper-white)" stroke-width="2" fill="var(--deep-black)" />
+  
+  <!-- Coffee surface -->
+  <ellipse cx="24" cy="24" rx="13" ry="2" fill="var(--sepia)" opacity="0.6" />
+  
+  <!-- Pin point -->
+  <path d="M24 52 L24 62" stroke="var(--paper-white)" stroke-width="2" stroke-linecap="round" />
+  <circle cx="24" cy="63" r="1.5" fill="var(--sepia)" />
+
+  <style>
+    .steam {
+      opacity: 0.6;
+      animation: steam-rise 2.5s ease-in-out infinite;
+    }
+    .steam-1 { animation-delay: 0s; }
+    .steam-2 { animation-delay: 0.8s; }
+    .steam-3 { animation-delay: 1.6s; }
+
+    @keyframes steam-rise {
+      0% { opacity: 0; transform: translateY(0); }
+      30% { opacity: 0.6; }
+      100% { opacity: 0; transform: translateY(-8px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .steam { animation: none; opacity: 0.4; }
+    }
+  </style>
+</svg>

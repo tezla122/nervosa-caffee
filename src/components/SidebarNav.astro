@@ -1,0 +1,153 @@
+---
+// SidebarNav.astro — Persistent sidebar dot navigation with scroll tracking
+const sections = [
+  { id: 'hero', label: 'Început' },
+  { id: 'manifesto', label: 'Manifest' },
+  { id: 'menu', label: 'Meniu' },
+  { id: 'vent-wall', label: 'Zidul' },
+  { id: 'location', label: 'Locație' },
+];
+---
+
+<nav class="sidebar-nav" aria-label="Navigare secțiuni" id="sidebar-nav">
+  <div class="sidebar-line" aria-hidden="true"></div>
+  {sections.map((section, i) => (
+    <a
+      href={`#${section.id}`}
+      class="sidebar-dot"
+      data-section={section.id}
+      aria-label={section.label}
+      title={section.label}
+    >
+      <span class="dot-inner"></span>
+      <span class="dot-label">{section.label}</span>
+    </a>
+  ))}
+  <!-- Arrow indicator -->
+  <div class="sidebar-arrow" id="sidebar-arrow" aria-hidden="true">
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+      <path d="M3 10 L14 10 M10 5 L15 10 L10 15" stroke="var(--sepia)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </div>
+</nav>
+
+<style>
+  .sidebar-nav {
+    position: fixed;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(-2deg);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.8rem;
+  }
+
+  .sidebar-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1.5px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(var(--sepia-rgb), 0.3) 10%,
+      rgba(var(--sepia-rgb), 0.3) 90%,
+      transparent
+    );
+    transform: translateX(-50%);
+  }
+
+  .sidebar-dot {
+    position: relative;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    z-index: 1;
+  }
+
+  .dot-inner {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--ash);
+    border: 1.5px solid rgba(var(--sepia-rgb), 0.4);
+    transition: all 0.4s var(--ease-scribble);
+  }
+
+  .sidebar-dot:hover .dot-inner,
+  .sidebar-dot.active .dot-inner {
+    background: var(--sepia);
+    transform: scale(1.4);
+    box-shadow: 0 0 8px rgba(var(--sepia-rgb), 0.4);
+  }
+
+  .dot-label {
+    position: absolute;
+    left: 22px;
+    white-space: nowrap;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ash);
+    opacity: 0;
+    transform: translateX(-5px);
+    transition: all 0.3s var(--ease-scribble);
+    pointer-events: none;
+    letter-spacing: 0.04em;
+  }
+
+  .sidebar-dot:hover .dot-label {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .sidebar-arrow {
+    position: absolute;
+    left: -24px;
+    transition: top 0.5s var(--ease-scribble);
+    top: 0;
+  }
+
+  /* Hide on mobile */
+  @media (max-width: 768px) {
+    .sidebar-nav {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Scroll tracking for sidebar navigation
+  const dots = document.querySelectorAll<HTMLAnchorElement>('.sidebar-dot');
+  const arrow = document.getElementById('sidebar-arrow');
+  const sections = ['hero', 'manifesto', 'menu', 'vent-wall', 'location'];
+
+  const scrollObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          dots.forEach((dot) => {
+            dot.classList.toggle('active', dot.dataset.section === id);
+            if (dot.dataset.section === id && arrow) {
+              const dotRect = dot.getBoundingClientRect();
+              const navRect = dot.closest('.sidebar-nav')!.getBoundingClientRect();
+              arrow.style.top = `${dotRect.top - navRect.top + 2}px`;
+            }
+          });
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  sections.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) scrollObserver.observe(el);
+  });
+</script>

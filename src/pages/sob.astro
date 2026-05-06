@@ -1,0 +1,56 @@
+---
+// sob.astro — Secret route. Undocumented. On-brand.
+---
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>...</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background: #0a0908;
+      color: #c9a96e;
+      font-family: 'Share Tech Mono', monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+    
+    .sob-text {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-style: italic;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      animation: fade-in 3s ease forwards 1s;
+    }
+    
+    .sob-text::after {
+      content: '_';
+      animation: blink 0.8s step-end infinite;
+      margin-left: 2px;
+    }
+    
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes blink {
+      from, to { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <p class="sob-text">„ne înțelegem."</p>
+</body>
+</html>

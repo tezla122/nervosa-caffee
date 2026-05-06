@@ -1,0 +1,96 @@
+{
+  "seasonal_special": {
+    "name": "Nebula de Lavandă",
+    "description": "Espresso dublu cu sirop de lavandă artizanal, lapte de ovăz, spumă de vanilie. Presărat cu petale de lavandă uscate.",
+    "price": "22 lei",
+    "badge": "★ Special de Sezon"
+  },
+  "specialty_coffee": [
+    {
+      "name": "Espresso Singur",
+      "description": "Shot dublu, origini Etiopia Yirgacheffe. Note de bergamotă și ciocolată neagră.",
+      "price": "12 lei"
+    },
+    {
+      "name": "Cappuccino Existențial",
+      "description": "Espresso dublu, lapte texturizat. Crema perfectă pentru contemplare.",
+      "price": "16 lei"
+    },
+    {
+      "name": "Flat White al Anxietății",
+      "description": "Espresso dublu ristretto, micro-foam de lapte integral. Tare, dens, hotărât.",
+      "price": "17 lei"
+    },
+    {
+      "name": "Pour Over Meditativ",
+      "description": "Metodă lentă, V60. Origini rotative. Întreabă barista ce visează azi.",
+      "price": "18 lei"
+    },
+    {
+      "name": "Cold Brew Insomniac",
+      "description": "Infuzie rece 18 ore. Servit pe gheață cu coajă de portocală.",
+      "price": "19 lei"
+    },
+    {
+      "name": "Americano Rebel",
+      "description": "Espresso dublu, apă fierbinte. Simplu. Sincer. Fără compromisuri.",
+      "price": "13 lei"
+    },
+    {
+      "name": "Mocha Melancolică",
+      "description": "Espresso, ciocolată belgiană topită, lapte spumant. Un desert lichid.",
+      "price": "19 lei"
+    }
+  ],
+  "refreshing_drinks": [
+    {
+      "name": "Limonadă cu Rozmarin",
+      "description": "Lămâi proaspete, sirop de rozmarin, apă minerală. Revigorant.",
+      "price": "16 lei",
+      "seasonal": true
+    },
+    {
+      "name": "Ice Tea Matcha-Mentă",
+      "description": "Matcha ceremonial, frunze de mentă proaspătă, gheață.",
+      "price": "18 lei"
+    },
+    {
+      "name": "Suc de Portocale Proaspăt",
+      "description": "Stors la comandă. Trei portocale per pahar. Nimic altceva.",
+      "price": "14 lei"
+    },
+    {
+      "name": "Tonic cu Grapefruit",
+      "description": "Apă tonică artizanală, grapefruit roz, cimbru.",
+      "price": "17 lei",
+      "seasonal": true
+    },
+    {
+      "name": "Apă cu Castraveți & Lavandă",
+      "description": "Apă filtrată, castraveți proaspeți, sirop de lavandă.",
+      "price": "12 lei"
+    }
+  ],
+  "protein_drinks": [
+    {
+      "name": "Shake Putere Brută",
+      "description": "Proteină whey, banană, unt de arahide, lapte de migdale. 30g proteină.",
+      "price": "24 lei"
+    },
+    {
+      "name": "Smoothie Verde Nervos",
+      "description": "Spanac, avocado, proteină vegetală, miere, ghimbir. Detox, dar cu atitudine.",
+      "price": "22 lei"
+    },
+    {
+      "name": "Cacao Proteică",
+      "description": "Cacao raw, proteină whey, lapte de ovăz, banană congelată. Post-workout perfekt.",
+      "price": "23 lei"
+    },
+    {
+      "name": "Berry Boost",
+      "description": "Mix de fructe de pădure, proteină, iaurt grecesc, miere. Antioxidanți la maxim.",
+      "price": "24 lei"
+    }
+  ]
+}

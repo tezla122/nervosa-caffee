@@ -1,0 +1,28 @@
+---
+// Smudge.astro — Decorative smudge SVG for dark cards
+interface Props {
+  class?: string;
+  width?: string;
+  height?: string;
+}
+
+const { class: className = '', width = '120', height = '12' } = Astro.props;
+---
+
+<svg
+  class={className}
+  width={width}
+  height={height}
+  viewBox="0 0 120 12"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  preserveAspectRatio="none"
+>
+  <path
+    d="M0 6 C10 3, 25 9, 40 5 C55 1, 65 10, 80 6 C95 2, 110 8, 120 5"
+    stroke="rgba(255,255,255,0.08)"
+    stroke-width="6"
+    fill="none"
+    stroke-linecap="round"
+  />
+</svg>

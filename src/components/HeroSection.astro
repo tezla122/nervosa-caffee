@@ -1,0 +1,223 @@
+---
+// HeroSection.astro — Typewriter headline, catchphrase, scroll CTA
+import CornerFlourish from './svg/CornerFlourish.astro';
+---
+
+<section id="hero" class="section section-dark hero-section">
+  <CornerFlourish corner="top-left" class="hero-flourish hero-flourish-tl" />
+  <CornerFlourish corner="top-right" class="hero-flourish hero-flourish-tr" />
+
+  <div class="hero-content">
+    <!-- Main headline -->
+    <div class="hero-headline-wrapper">
+      <h1 class="hero-headline" id="hero-headline">
+        <span class="hero-line-1">Nervosa</span>
+        <span class="hero-line-2">Cafe</span>
+      </h1>
+    </div>
+
+    <!-- Tagline with typewriter -->
+    <div class="hero-tagline-wrapper">
+      <p class="hero-tagline font-mono" id="hero-tagline"></p>
+    </div>
+
+    <!-- Brand catchphrase -->
+    <p class="hero-catchphrase heading-tilt-subtle">
+      „Overthinking Fuel."
+    </p>
+
+    <!-- Scroll CTA -->
+    <a href="#manifesto" class="hero-scroll-cta" aria-label="Coboară la manifest">
+      <span class="scroll-text font-mono">coboară · scroll</span>
+      <svg class="scroll-arrow" width="24" height="40" viewBox="0 0 24 40" fill="none" aria-hidden="true">
+        <path d="M12 2 L12 34 M6 28 L12 36 L18 28" stroke="var(--sepia)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
+  </div>
+
+  <CornerFlourish corner="bottom-left" class="hero-flourish hero-flourish-bl" />
+  <CornerFlourish corner="bottom-right" class="hero-flourish hero-flourish-br" />
+</section>
+
+<style>
+  .hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-xl);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+  }
+
+  .hero-headline-wrapper {
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-headline {
+    font-size: clamp(3.5rem, 12vw, 8rem);
+    line-height: 0.9;
+    color: var(--paper-white);
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+
+  .hero-line-1 {
+    display: block;
+    transform: rotate(-2deg);
+    color: var(--sepia);
+  }
+
+  .hero-line-2 {
+    display: block;
+    transform: rotate(1.5deg);
+    font-size: 0.6em;
+    color: var(--paper-white);
+    opacity: 0.85;
+    margin-top: -0.1em;
+  }
+
+  .hero-tagline-wrapper {
+    min-height: 2rem;
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-tagline {
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    color: var(--ash);
+    letter-spacing: 0.1em;
+  }
+
+  .hero-tagline::after {
+    content: '_';
+    animation: blink-char 0.6s step-end infinite;
+    color: var(--sepia);
+  }
+
+  @keyframes blink-char {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .hero-catchphrase {
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--sepia);
+    margin-bottom: var(--space-2xl);
+    opacity: 0;
+    animation: fade-in-up 1s var(--ease-scribble) 3.5s forwards;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px) rotate(-1.2deg);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) rotate(-1.2deg);
+    }
+  }
+
+  .hero-scroll-cta {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    opacity: 0;
+    animation: fade-in-up 1s var(--ease-scribble) 4.5s forwards;
+  }
+
+  .scroll-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--ash);
+    text-transform: lowercase;
+  }
+
+  .scroll-arrow {
+    animation: bounce-down 2s ease-in-out infinite 5s;
+  }
+
+  @keyframes bounce-down {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  /* Flourishes */
+  .hero-flourish {
+    position: absolute;
+    color: rgba(var(--sepia-rgb), 0.15);
+    z-index: 1;
+  }
+  .hero-flourish-tl { top: 2rem; left: 2rem; }
+  .hero-flourish-tr { top: 2rem; right: 2rem; }
+  .hero-flourish-bl { bottom: 2rem; left: 2rem; }
+  .hero-flourish-br { bottom: 2rem; right: 2rem; }
+
+  @media (max-width: 768px) {
+    .hero-flourish { display: none; }
+    .hero-section { padding: var(--space-lg); }
+  }
+</style>
+
+<script>
+  // Typewriter effect for tagline
+  const taglines = [
+    'Cafea bună, oameni interesanți, gânduri necenzurate.',
+    'Aici, toată lumea e puțin nevrotică (și e ok).',
+    'Făcută cu grijă. Servită cu sclipici.',
+  ];
+
+  const taglineEl = document.getElementById('hero-tagline');
+  if (taglineEl) {
+    let lineIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let pauseCounter = 0;
+
+    function typewrite() {
+      const currentLine = taglines[lineIndex];
+
+      if (!isDeleting) {
+        taglineEl!.textContent = currentLine.substring(0, charIndex + 1);
+        charIndex++;
+
+        if (charIndex === currentLine.length) {
+          pauseCounter++;
+          if (pauseCounter < 30) {
+            setTimeout(typewrite, 80);
+            return;
+          }
+          pauseCounter = 0;
+          isDeleting = true;
+          setTimeout(typewrite, 50);
+          return;
+        }
+        setTimeout(typewrite, 55 + Math.random() * 45);
+      } else {
+        taglineEl!.textContent = currentLine.substring(0, charIndex - 1);
+        charIndex--;
+
+        if (charIndex === 0) {
+          isDeleting = false;
+          lineIndex = (lineIndex + 1) % taglines.length;
+          setTimeout(typewrite, 400);
+          return;
+        }
+        setTimeout(typewrite, 30);
+      }
+    }
+
+    // Start after a small delay
+    setTimeout(typewrite, 800);
+  }
+</script>

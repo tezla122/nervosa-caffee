@@ -1,0 +1,26 @@
+---
+// TornEdge.astro — SVG torn paper edge section divider
+interface Props {
+  class?: string;
+  fill?: string;
+  direction?: 'top' | 'bottom';
+}
+
+const { class: className = '', fill = 'var(--paper-white)', direction = 'top' } = Astro.props;
+const transform = direction === 'bottom' ? 'scale(1, -1) translate(0, -30)' : '';
+---
+
+<svg
+  class={className}
+  viewBox="0 0 1200 30"
+  preserveAspectRatio="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  style={`width: 100%; height: 30px; display: block; position: absolute; ${direction === 'top' ? 'top: -1px' : 'bottom: -1px'}; left: 0; z-index: 2;`}
+>
+  <path
+    d={`M0 30 L0 18 Q30 12 60 16 Q90 20 120 14 Q150 8 180 12 Q210 16 240 10 Q270 5 300 9 Q330 14 360 8 Q390 3 420 7 Q450 12 480 6 Q510 1 540 5 Q570 10 600 4 Q630 0 660 5 Q690 10 720 6 Q750 2 780 8 Q810 14 840 9 Q870 4 900 10 Q930 15 960 11 Q990 7 1020 13 Q1050 18 1080 14 Q1110 10 1140 16 Q1170 20 1200 15 L1200 30 Z`}
+    fill={fill}
+    transform={transform}
+  />
+</svg>

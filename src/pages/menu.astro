@@ -1,0 +1,18 @@
+---
+// menu.astro — Standalone shareable menu page
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MenuSection from '../components/MenuSection.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Meniu — Nervosa Cafe | Cluj-Napoca"
+  description="Meniul complet Nervosa Cafe: specialty coffee, băuturi răcoritoare, protein drinks. Cluj-Napoca."
+>
+  <main>
+    <div style="padding-top: 2rem;">
+      <MenuSection />
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

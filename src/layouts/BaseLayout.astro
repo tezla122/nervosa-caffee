@@ -1,0 +1,137 @@
+---
+// BaseLayout.astro — Main layout with grain filter, fonts, meta, schema.org
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'Nervosa Cafe — Overthinking Fuel | Cluj-Napoca',
+  description = 'Cafea bună, oameni interesanți, gânduri necenzurate. Specialty coffee & vibes în Cluj-Napoca.',
+  ogImage = '/og.png',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#1a1814" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="canonical" href={canonicalURL} />
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:locale" content="ro_RO" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <!-- Fonts (Google Fonts CDN fallback — switch to self-hosted woff2 for production) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+
+  <title>{title}</title>
+
+  <!-- Schema.org LocalBusiness -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "Nervosa Cafe",
+    "description": "Specialty coffee & vibes în Cluj-Napoca. Overthinking Fuel.",
+    "url": "https://nervosa.cafe",
+    "telephone": "+40-XXX-XXX-XXX",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Strada Exemplu 42",
+      "addressLocality": "Cluj-Napoca",
+      "addressRegion": "Cluj",
+      "postalCode": "400000",
+      "addressCountry": "RO"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "46.7712",
+      "longitude": "23.6236"
+    },
+    "servesCuisine": "Coffee",
+    "priceRange": "$$",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "07:30",
+        "closes": "22:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday", "Sunday"],
+        "opens": "09:00",
+        "closes": "23:00"
+      }
+    ],
+    "image": "https://nervosa.cafe/og.png",
+    "sameAs": []
+  })} />
+</head>
+<body>
+  <!-- Grain texture overlay (CSS-only, zero image cost) -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+
+  <!-- Hidden SVG defs for filters -->
+  <svg class="hidden" xmlns="http://www.w3.org/2000/svg" style="position: absolute; width: 0; height: 0;">
+    <defs>
+      <filter id="grain" x="0%" y="0%" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+        <feColorMatrix type="saturate" values="0" />
+      </filter>
+      <filter id="grain-light" x="0%" y="0%" width="100%" height="100%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.45" numOctaves="2" stitchTiles="stitch" />
+        <feColorMatrix type="saturate" values="0" />
+      </filter>
+    </defs>
+  </svg>
+
+  <slot />
+
+  <!-- Global scripts: tear-in observer, scribble observer -->
+  <script>
+    // IntersectionObserver for tear-in sections
+    const tearIns = document.querySelectorAll('.tear-in');
+    const scribbles = document.querySelectorAll('.scribble');
+
+    const observerOptions: IntersectionObserverInit = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px',
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    tearIns.forEach((el) => observer.observe(el));
+    scribbles.forEach((el) => observer.observe(el));
+  </script>
+
+  <style is:global>
+    @import '../styles/global.css';
+  </style>
+</body>
+</html>

@@ -1,0 +1,32 @@
+---
+// InkBlot.astro — Decorative ink blot for menu items
+interface Props {
+  class?: string;
+  width?: string;
+  height?: string;
+  variant?: 1 | 2 | 3;
+}
+
+const { class: className = '', width = '24', height = '24', variant = 1 } = Astro.props;
+
+const paths: Record<number, string> = {
+  1: "M12 2 C8 3 4 8 5 12 C6 16 10 20 14 19 C18 18 21 14 20 10 C19 6 16 1 12 2Z M10 8 C9 10 11 13 13 12 C15 11 14 8 12 7 C11 6.5 10.5 7 10 8Z",
+  2: "M10 3 C6 4 2 9 4 13 C6 17 11 19 15 18 C19 17 22 12 20 8 C18 4 14 2 10 3Z M8 9 C7 11 9 14 12 13 C14 12 15 9 13 8 C11 7 9 7.5 8 9Z",
+  3: "M14 2 C10 1 5 5 4 9 C3 13 6 18 10 20 C14 22 19 19 21 15 C23 11 20 5 16 3 C15 2.5 14.5 2 14 2Z",
+};
+---
+
+<svg
+  class={className}
+  width={width}
+  height={height}
+  viewBox="0 0 24 24"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  <path
+    d={paths[variant]}
+    fill="currentColor"
+    opacity="0.12"
+  />
+</svg>

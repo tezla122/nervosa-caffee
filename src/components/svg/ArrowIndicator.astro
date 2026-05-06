@@ -1,0 +1,26 @@
+---
+// ArrowIndicator.astro — Hand-drawn navigation arrow SVG
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<svg
+  class={`scribble ${className}`}
+  width="20"
+  height="20"
+  viewBox="0 0 20 20"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+>
+  <path
+    d="M3 10 L15 10 M11 5 L16 10 L11 15"
+    stroke="var(--sepia)"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

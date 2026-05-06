@@ -1,0 +1,569 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════
+   NERVOSA CAFE — Design Token System
+   "Overthinking Fuel."
+   ═══════════════════════════════════════════ */
+
+/* Local @font-face declarations removed for now, using Google Fonts CDN */
+
+/* ── CSS Custom Properties ── */
+:root {
+  /* Palette */
+  --sepia: #c9a96e;
+  --deep-black: #1a1814;
+  --paper-white: #f5f0e8;
+  --ink-rust: #8b4513;
+  --ash: #4a4542;
+
+  /* Palette RGB for alpha blending */
+  --sepia-rgb: 201, 169, 110;
+  --deep-black-rgb: 26, 24, 20;
+  --paper-white-rgb: 245, 240, 232;
+  --ink-rust-rgb: 139, 69, 19;
+  --ash-rgb: 74, 69, 66;
+
+  /* Typography */
+  --font-heading: 'Special Elite', 'Courier New', monospace;
+  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+  --font-body: Georgia, 'Times New Roman', serif;
+
+  /* Spacing scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  --space-2xl: 8rem;
+  --space-3xl: 12rem;
+
+  /* Grain intensity */
+  --grain-opacity: 0.08;
+
+  /* Transition timing */
+  --ease-scribble: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-scribble: 0.8s;
+}
+
+/* ── Base Reset & Body ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  line-height: 1.9;
+  color: var(--deep-black);
+  background-color: var(--paper-white);
+  overflow-x: hidden;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
+h2 { font-size: clamp(1.8rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.3rem, 3vw, 2rem); }
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* Rotated headings — collage aesthetic */
+.heading-tilt-left {
+  transform: rotate(-2.5deg);
+  display: inline-block;
+}
+.heading-tilt-right {
+  transform: rotate(2.5deg);
+  display: inline-block;
+}
+.heading-tilt-subtle {
+  transform: rotate(-1.2deg);
+  display: inline-block;
+}
+
+/* ── Links ── */
+a {
+  color: var(--sepia);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s var(--ease-scribble);
+}
+
+a:hover {
+  color: var(--ink-rust);
+}
+
+/* SVG scribble underline on links */
+.scribble-link {
+  position: relative;
+  display: inline-block;
+}
+
+.scribble-link svg {
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  pointer-events: none;
+}
+
+.scribble-link svg path {
+  stroke: var(--sepia);
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  transition: stroke-dashoffset var(--duration-scribble) var(--ease-scribble);
+}
+
+.scribble-link:hover svg path {
+  stroke-dashoffset: 0;
+}
+
+/* ── Grain Overlay ── */
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: multiply;
+}
+
+.grain-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+}
+
+/* ── Section Styles ── */
+.section {
+  position: relative;
+  padding: var(--space-2xl) var(--space-lg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section-dark {
+  background-color: var(--deep-black);
+  color: var(--paper-white);
+}
+
+.section-paper {
+  background-color: var(--paper-white);
+  color: var(--deep-black);
+}
+
+/* Torn paper section dividers */
+.torn-edge-top {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  z-index: 2;
+}
+
+.torn-edge-bottom {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  z-index: 2;
+  transform: rotate(180deg);
+}
+
+/* ── Tear-in Animation ── */
+.tear-in {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  transition: clip-path 1.2s var(--ease-scribble);
+}
+
+.tear-in.visible {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* ── SVG Scribble Animations ── */
+.scribble path,
+.scribble line,
+.scribble circle,
+.scribble polyline {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  transition: stroke-dashoffset var(--duration-scribble) var(--ease-scribble);
+}
+
+.scribble.visible path,
+.scribble.visible line,
+.scribble.visible circle,
+.scribble.visible polyline {
+  stroke-dashoffset: 0;
+}
+
+/* ── Typewriter Effect ── */
+.typewriter {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid var(--sepia);
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--sepia); }
+}
+
+/* Blinking cursor standalone */
+.blink-cursor::after {
+  content: '_';
+  animation: blink-char 0.8s step-end infinite;
+  font-family: var(--font-mono);
+  color: var(--sepia);
+}
+
+@keyframes blink-char {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* ── Overthinking Loading State ── */
+.overthinking-loader {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ash);
+  letter-spacing: 0.05em;
+}
+
+.overthinking-loader::after {
+  content: '_';
+  animation: blink-char 0.6s step-end infinite;
+}
+
+/* ── Vent Wall ── */
+.vent-note {
+  background: linear-gradient(135deg, #f5f0e8 0%, #ede6d6 100%);
+  border: 1px solid rgba(var(--ink-rust-rgb), 0.2);
+  padding: var(--space-md) var(--space-lg);
+  box-shadow: 
+    2px 3px 8px rgba(var(--deep-black-rgb), 0.12),
+    inset 0 0 20px rgba(var(--sepia-rgb), 0.05);
+  position: relative;
+  max-width: 280px;
+  min-height: 120px;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  transition: transform 0.3s var(--ease-scribble), box-shadow 0.3s;
+}
+
+.vent-note:hover {
+  transform: scale(1.03);
+  box-shadow: 
+    4px 6px 16px rgba(var(--deep-black-rgb), 0.18),
+    inset 0 0 20px rgba(var(--sepia-rgb), 0.05);
+}
+
+.vent-note::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, var(--ink-rust) 30%, transparent 31%);
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+/* ── Vent Textarea ── */
+.vent-textarea {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  line-height: 1.6;
+  background: linear-gradient(135deg, #f5f0e8 0%, #ede6d6 100%);
+  border: 2px dashed rgba(var(--ink-rust-rgb), 0.3);
+  padding: var(--space-md);
+  resize: none;
+  outline: none;
+  width: 100%;
+  min-height: 100px;
+  color: var(--deep-black);
+  transition: border-color 0.3s;
+}
+
+.vent-textarea:focus {
+  border-color: var(--sepia);
+}
+
+.vent-textarea::placeholder {
+  color: var(--ash);
+  opacity: 0.6;
+  font-style: italic;
+}
+
+/* ── Menu Card Styles ── */
+
+/* Graph Paper — Specialty Coffee */
+.menu-card-graphpaper {
+  background-color: #f7f2e5;
+  background-image:
+    linear-gradient(rgba(var(--sepia-rgb), 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--sepia-rgb), 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border: 1px solid rgba(var(--ink-rust-rgb), 0.2);
+  padding: var(--space-xl) var(--space-lg);
+  position: relative;
+}
+
+/* Index Card — Refreshing Drinks */
+.menu-card-indexcard {
+  background-color: #f0f4f8;
+  border: 1px solid #d1d9e0;
+  padding: var(--space-xl) var(--space-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-card-indexcard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    var(--sepia) 0%, 
+    var(--ink-rust) 50%, 
+    var(--sepia) 100%
+  );
+}
+
+/* Dark Card — Protein Drinks */
+.menu-card-dark {
+  background-color: var(--deep-black);
+  color: var(--paper-white);
+  padding: var(--space-xl) var(--space-lg);
+  position: relative;
+}
+
+.menu-card-dark .menu-item-name {
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px dotted rgba(var(--ash-rgb), 0.2);
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item-name {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+}
+
+.menu-item-description {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--ash);
+  margin-top: 2px;
+}
+
+.menu-item-price {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--sepia);
+  white-space: nowrap;
+  margin-left: var(--space-md);
+}
+
+/* ── Photo Treatment ── */
+.photo-sepia {
+  filter: sepia(0.7) contrast(1.2) brightness(0.9);
+}
+
+.photo-torn {
+  clip-path: polygon(2% 5%, 98% 0%, 100% 93%, 3% 98%);
+}
+
+/* ── Buttons ── */
+.btn-nervosa {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--deep-black);
+  color: var(--paper-white);
+  border: 2px solid var(--sepia);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-scribble);
+  position: relative;
+  display: inline-block;
+  text-transform: none;
+  letter-spacing: 0.03em;
+}
+
+.btn-nervosa:hover {
+  background: var(--sepia);
+  color: var(--deep-black);
+  transform: rotate(-1deg) scale(1.02);
+}
+
+.btn-nervosa-outline {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  padding: var(--space-sm) var(--space-lg);
+  background: transparent;
+  color: var(--sepia);
+  border: 2px dashed var(--sepia);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-scribble);
+}
+
+.btn-nervosa-outline:hover {
+  background: rgba(var(--sepia-rgb), 0.1);
+  border-style: solid;
+}
+
+/* ── Map ── */
+.map-container {
+  width: 100%;
+  height: 400px;
+  border: 2px solid rgba(var(--sepia-rgb), 0.3);
+  filter: sepia(0.4) contrast(1.1) brightness(0.85);
+  position: relative;
+}
+
+/* ── Sticky Note ── */
+.sticky-note {
+  background: linear-gradient(135deg, #f5e6a3 0%, #e8d78b 100%);
+  padding: var(--space-md) var(--space-lg);
+  box-shadow: 3px 4px 10px rgba(var(--deep-black-rgb), 0.15);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  transform: rotate(-2deg);
+  position: relative;
+  max-width: 260px;
+}
+
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 24px;
+  height: 24px;
+  background: rgba(var(--ink-rust-rgb), 0.15);
+  border-radius: 2px;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--deep-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sepia);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-rust);
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .typewriter {
+    width: 100% !important;
+    border-right: none;
+    animation: none;
+  }
+
+  .tear-in {
+    clip-path: none;
+  }
+
+  .scribble path,
+  .scribble line,
+  .scribble circle,
+  .scribble polyline {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  h1 { font-size: clamp(2rem, 8vw, 3rem); }
+
+  .vent-note {
+    max-width: 100%;
+  }
+
+  .map-container {
+    height: 280px;
+  }
+
+  .sticky-note {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: var(--space-lg) var(--space-sm);
+  }
+}

@@ -1,0 +1,175 @@
+---
+// ManifestoSection.astro — Three core Romanian messages with SVG reveals
+import Heart from './svg/Heart.astro';
+import Eye from './svg/Eye.astro';
+import TornEdge from './svg/TornEdge.astro';
+---
+
+<section id="manifesto" class="section section-paper manifesto-section">
+  <TornEdge direction="top" fill="var(--deep-black)" />
+
+  <div class="manifesto-container">
+    <h2 class="manifesto-title heading-tilt-left tear-in">
+      <span class="manifesto-title-label font-mono">// manifest</span>
+      Ce credem noi
+    </h2>
+
+    <div class="manifesto-grid">
+      <!-- Message 1 -->
+      <div class="manifesto-card manifesto-card-1 tear-in">
+        <div class="manifesto-deco">
+          <Heart class="manifesto-heart" width="60" height="60" />
+        </div>
+        <blockquote class="manifesto-quote">
+          „Cafea bună, oameni interesanți, gânduri necenzurate."
+        </blockquote>
+        <p class="manifesto-translation font-mono">
+          Good coffee, interesting people, uncensored thoughts.
+        </p>
+      </div>
+
+      <!-- Message 2 -->
+      <div class="manifesto-card manifesto-card-2 tear-in">
+        <div class="manifesto-deco">
+          <Eye class="manifesto-eye" width="60" height="35" />
+        </div>
+        <blockquote class="manifesto-quote">
+          „Aici, toată lumea e puțin nevrotică (și e ok)."
+        </blockquote>
+        <p class="manifesto-translation font-mono">
+          Here, everyone's a little neurotic (and that's ok).
+        </p>
+      </div>
+
+      <!-- Message 3 -->
+      <div class="manifesto-card manifesto-card-3 tear-in">
+        <div class="manifesto-deco">
+          <svg class="scribble manifesto-sparkle" width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <path d="M20 2 L20 38 M2 20 L38 20 M7 7 L33 33 M33 7 L7 33" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+          </svg>
+        </div>
+        <blockquote class="manifesto-quote">
+          „Făcută cu grijă. Servită cu sclipici."
+        </blockquote>
+        <p class="manifesto-translation font-mono">
+          Made with care. Served with sparkle.
+        </p>
+      </div>
+    </div>
+
+    <!-- Decorative footer -->
+    <p class="manifesto-footer font-mono tear-in">
+      — nervosa, cluj-napoca, 2026
+    </p>
+  </div>
+
+  <TornEdge direction="bottom" fill="var(--deep-black)" />
+</section>
+
+<style>
+  .manifesto-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: var(--space-3xl) var(--space-lg);
+  }
+
+  .manifesto-container {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .manifesto-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--deep-black);
+    margin-bottom: var(--space-2xl);
+    position: relative;
+  }
+
+  .manifesto-title-label {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--ash);
+    letter-spacing: 0.15em;
+    margin-bottom: var(--space-xs);
+    transform: rotate(0deg);
+  }
+
+  .manifesto-grid {
+    display: grid;
+    gap: var(--space-xl);
+    grid-template-columns: 1fr;
+  }
+
+  .manifesto-card {
+    position: relative;
+    padding: var(--space-xl) var(--space-lg);
+    border-left: 3px solid var(--sepia);
+    transition: transform 0.3s var(--ease-scribble);
+  }
+
+  .manifesto-card:hover {
+    transform: translateX(8px);
+  }
+
+  .manifesto-card-1 {
+    margin-left: 0;
+  }
+
+  .manifesto-card-2 {
+    margin-left: 3rem;
+    border-left-color: var(--ink-rust);
+  }
+
+  .manifesto-card-3 {
+    margin-left: 1.5rem;
+    border-left-color: var(--ash);
+  }
+
+  .manifesto-deco {
+    position: absolute;
+    top: -10px;
+    right: -20px;
+    color: rgba(var(--sepia-rgb), 0.2);
+    pointer-events: none;
+  }
+
+  .manifesto-quote {
+    font-family: var(--font-heading);
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    color: var(--deep-black);
+    margin: 0 0 var(--space-sm) 0;
+    line-height: 1.5;
+    padding: 0;
+    border: none;
+  }
+
+  .manifesto-translation {
+    font-size: 0.75rem;
+    color: var(--ash);
+    letter-spacing: 0.08em;
+    font-style: italic;
+  }
+
+  .manifesto-footer {
+    margin-top: var(--space-2xl);
+    text-align: right;
+    font-size: 0.75rem;
+    color: var(--ash);
+    letter-spacing: 0.12em;
+  }
+
+  .manifesto-sparkle {
+    color: var(--sepia);
+  }
+
+  @media (max-width: 768px) {
+    .manifesto-card-2 { margin-left: 1rem; }
+    .manifesto-card-3 { margin-left: 0.5rem; }
+    .manifesto-deco { display: none; }
+    .manifesto-section { padding: var(--space-2xl) var(--space-md); }
+  }
+</style>

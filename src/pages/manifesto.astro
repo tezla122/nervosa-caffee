@@ -1,0 +1,18 @@
+---
+// manifesto.astro — Standalone manifesto page
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ManifestoSection from '../components/ManifestoSection.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Manifest — Nervosa Cafe | Cluj-Napoca"
+  description="Ce credem noi la Nervosa Cafe. Cafea bună, oameni interesanți, gânduri necenzurate."
+>
+  <main>
+    <div style="padding-top: 2rem;">
+      <ManifestoSection />
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,150 @@
+---
+// Footer.astro — Socials, GDPR notice, hours, Easter egg
+import Heart from './svg/Heart.astro';
+---
+
+<footer class="site-footer section-dark" id="footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <!-- Brand -->
+      <div class="footer-brand">
+        <button class="footer-logo" id="footer-logo" aria-label="Nervosa Cafe" type="button">
+          <img src="/logo.png" alt="Nervosa Cafe" class="footer-logo-img" />
+        </button>
+        <p class="footer-tagline font-mono">overthinking fuel.</p>
+      </div>
+
+      <!-- Hours -->
+      <div class="footer-hours">
+        <h4 class="footer-heading font-heading">Program</h4>
+        <p class="footer-text font-mono">
+          L–V: 07:30 – 22:00<br/>
+          S–D: 09:00 – 23:00
+        </p>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-contact">
+        <h4 class="footer-heading font-heading">Contact</h4>
+        <p class="footer-text font-mono">
+          Strada Exemplu 42<br/>
+          Cluj-Napoca, România
+        </p>
+      </div>
+
+      <!-- Socials -->
+      <div class="footer-socials">
+        <h4 class="footer-heading font-heading">Social</h4>
+        <div class="social-links">
+          <a href="#" class="social-link font-mono" target="_blank" rel="noopener" aria-label="Instagram">instagram</a>
+          <a href="#" class="social-link font-mono" target="_blank" rel="noopener" aria-label="TikTok">tiktok</a>
+          <a href="#" class="social-link font-mono" target="_blank" rel="noopener" aria-label="Facebook">facebook</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- GDPR Notice -->
+    <div class="footer-gdpr font-mono">
+      <p>
+        <Heart width="14" height="14" class="gdpr-heart" /> 
+        Zidul de gânduri este complet anonim. Nu colectăm date personale. 
+        Gândurile expiră automat în 24 de ore. 
+        <span class="gdpr-en">The vent wall is fully anonymous. No personal data collected. Posts auto-expire in 24h.</span>
+      </p>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom">
+      <span class="footer-copy font-mono">© 2026 Nervosa Cafe · Cluj-Napoca</span>
+      <span class="footer-made font-mono">făcut cu ☕ și anxietate</span>
+    </div>
+  </div>
+
+  <!-- Easter egg counter (invisible) -->
+  <div class="easter-egg-toast font-mono" id="easter-egg-toast" aria-live="polite"></div>
+</footer>
+
+<style>
+  .site-footer { padding: var(--space-2xl) var(--space-lg) var(--space-lg); position: relative; }
+  .footer-container { max-width: 1000px; margin: 0 auto; }
+
+  .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-xl); margin-bottom: var(--space-2xl); }
+  
+  .footer-logo { background: none; border: none; cursor: pointer; padding: 0; transition: transform 0.3s; }
+  .footer-logo-img { max-width: 150px; height: auto; border-radius: 4px; filter: invert(1) opacity(0.8) sepia(1) hue-rotate(15deg) saturate(2); }
+  .footer-logo:hover { transform: rotate(-3deg); }
+  .footer-tagline { font-size: 0.7rem; color: var(--ash); letter-spacing: 0.15em; margin-top: var(--space-xs); }
+
+  .footer-heading { font-size: 1rem; color: var(--sepia); margin: 0 0 var(--space-sm); }
+  .footer-text { font-size: 0.75rem; color: rgba(var(--paper-white-rgb), 0.6); line-height: 1.8; margin: 0; }
+
+  .social-links { display: flex; flex-direction: column; gap: var(--space-xs); }
+  .social-link { font-size: 0.75rem; color: rgba(var(--paper-white-rgb), 0.6); text-decoration: none; letter-spacing: 0.08em; transition: color 0.3s; }
+  .social-link:hover { color: var(--sepia); }
+
+  .footer-gdpr { border-top: 1px solid rgba(var(--sepia-rgb), 0.1); padding-top: var(--space-lg); margin-bottom: var(--space-lg); font-size: 0.65rem; color: var(--ash); line-height: 1.8; }
+  .gdpr-heart { display: inline; vertical-align: middle; color: var(--ink-rust); }
+  .gdpr-en { opacity: 0.5; display: block; margin-top: var(--space-xs); }
+
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-sm); }
+  .footer-copy { font-size: 0.65rem; color: var(--ash); }
+  .footer-made { font-size: 0.65rem; color: var(--ash); opacity: 0.5; }
+
+  .easter-egg-toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--sepia);
+    color: var(--deep-black);
+    padding: 0.5rem 1.5rem;
+    font-size: 0.8rem;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.4s var(--ease-scribble);
+    pointer-events: none;
+  }
+  .easter-egg-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 768px) { .site-footer { padding: var(--space-xl) var(--space-md) var(--space-md); } }
+</style>
+
+<script>
+  // Easter egg: ×7 logo click → Spotify playlist
+  const logo = document.getElementById('footer-logo')!;
+  const toast = document.getElementById('easter-egg-toast')!;
+  let clickCount = 0;
+  let clickTimer: ReturnType<typeof setTimeout>;
+
+  const messages = [
+    '', '', '', '',
+    'hmm...',
+    'aproape...',
+    'mai dă un click...',
+  ];
+
+  logo.addEventListener('click', () => {
+    clickCount++;
+    clearTimeout(clickTimer);
+
+    if (clickCount >= 7) {
+      // Easter egg triggered!
+      toast.textContent = '🎧 ai descoperit playlist-ul secret!';
+      toast.classList.add('show');
+      setTimeout(() => {
+        window.open('https://open.spotify.com/playlist/PLACEHOLDER', '_blank');
+        toast.classList.remove('show');
+      }, 1500);
+      clickCount = 0;
+      return;
+    }
+
+    if (messages[clickCount - 1]) {
+      toast.textContent = messages[clickCount - 1];
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1000);
+    }
+
+    clickTimer = setTimeout(() => { clickCount = 0; }, 3000);
+  });
+</script>
