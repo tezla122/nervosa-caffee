@@ -104,6 +104,10 @@ import CoffeeCupPin from './svg/CoffeeCupPin.astro';
     .location-section { padding: var(--space-2xl) var(--space-md); }
     .map-fallback { height: 280px; }
   }
+  @media (max-width: 480px) {
+    .location-section { padding: var(--space-xl) var(--space-sm); }
+    .map-fallback { height: 200px; }
+  }
 </style>
 
 <script>

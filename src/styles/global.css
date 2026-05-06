@@ -568,4 +568,10 @@ a:hover {
   .section {
     padding: var(--space-lg) var(--space-sm);
   }
+
+  .menu-card-graphpaper,
+  .menu-card-indexcard,
+  .menu-card-dark {
+    padding: var(--space-lg) var(--space-md);
+  }
 }

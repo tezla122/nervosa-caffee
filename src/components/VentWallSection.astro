@@ -75,6 +75,11 @@ import TornEdge from './svg/TornEdge.astro';
     .ventwall-section { padding: var(--space-2xl) var(--space-md); }
     .corkboard { grid-template-columns: 1fr; }
   }
+  @media (max-width: 480px) {
+    .ventwall-section { padding: var(--space-xl) var(--space-sm); }
+    .corkboard { padding: var(--space-md) var(--space-sm); }
+    .vent-form-wrapper { margin-bottom: var(--space-xl); }
+  }
 </style>
 
 <script>

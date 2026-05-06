@@ -11,16 +11,15 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.7.0",
     "@tailwindcss/vite": "^4.0.0",
-    "@astrojs/vercel": "^8.0.0",
-    "tailwindcss": "^4.0.0",
-    "nanoid": "^5.1.0",
+    "astro": "^5.7.0",
     "leo-profanity": "^1.7.0",
-    "maplibre-gl": "^5.4.0"
+    "maplibre-gl": "^5.4.0",
+    "nanoid": "^5.1.0",
+    "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.8.0",
-    "@types/node": "^22.0.0"
+    "@types/node": "^22.0.0",
+    "typescript": "^5.8.0"
   }
 }
