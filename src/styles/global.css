@@ -202,12 +202,12 @@ a:hover {
 
 /* ── Tear-in Animation ── */
 .tear-in {
-  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  clip-path: polygon(-10% -30px, 110% -30px, 110% -30px, -10% -30px);
   transition: clip-path 1.2s var(--ease-scribble);
 }
 
 .tear-in.visible {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(-10% -30px, 110% -30px, 110% 120%, -10% 120%);
 }
 
 /* ── SVG Scribble Animations ── */
@@ -346,6 +346,7 @@ a:hover {
   border: 1px solid rgba(var(--ink-rust-rgb), 0.2);
   padding: var(--space-xl) var(--space-lg);
   position: relative;
+  color: var(--deep-black);
 }
 
 /* Index Card — Refreshing Drinks */
@@ -355,6 +356,7 @@ a:hover {
   padding: var(--space-xl) var(--space-lg);
   position: relative;
   overflow: hidden;
+  color: var(--deep-black);
 }
 
 .menu-card-indexcard::before {

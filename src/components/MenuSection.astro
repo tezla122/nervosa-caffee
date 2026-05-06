@@ -58,7 +58,7 @@ import menuData from '../data/menu.json';
           <Fragment>
             <div class="menu-item item-dark">
               <div class="item-left">
-                <div><span class="item-name">{item.name}</span><p class="item-desc desc-light">{item.description}</p></div>
+                <div><span class="item-name name-light">{item.name}</span><p class="item-desc desc-light">{item.description}</p></div>
               </div>
               <span class="menu-item-price price-light">{item.price}</span>
             </div>
@@ -76,19 +76,20 @@ import menuData from '../data/menu.json';
   .menu-container { max-width: 1000px; margin: 0 auto; }
   .menu-title { font-size: clamp(2rem, 5vw, 3.5rem); color: var(--paper-white); margin-bottom: var(--space-xl); }
   .menu-label { display: block; font-size: 0.65rem; color: var(--ash); letter-spacing: 0.15em; margin-bottom: var(--space-xs); }
-  .seasonal-banner { background: linear-gradient(135deg, rgba(var(--sepia-rgb),0.15), rgba(var(--ink-rust-rgb),0.1)); border: 2px dashed var(--sepia); padding: var(--space-lg) var(--space-xl); margin-bottom: var(--space-2xl); position: relative; transform: rotate(-0.5deg); }
-  .seasonal-badge { position: absolute; top: -12px; left: 20px; background: var(--sepia); color: var(--deep-black); padding: 2px 12px; font-size: 0.7rem; letter-spacing: 0.1em; }
+  .seasonal-banner { background: linear-gradient(135deg, rgba(var(--sepia-rgb),0.15), rgba(var(--ink-rust-rgb),0.1)); border: 2px dashed var(--sepia); padding: var(--space-lg) var(--space-xl); margin-bottom: var(--space-2xl); transform: rotate(-0.5deg); }
+  .seasonal-badge { display: inline-block; background: var(--sepia); color: var(--deep-black); padding: 4px 12px; font-size: 0.75rem; letter-spacing: 0.1em; margin-bottom: var(--space-sm); font-weight: bold; }
   .seasonal-name { font-family: var(--font-heading); font-size: 1.5rem; color: var(--sepia); margin: 0 0 var(--space-xs); }
   .seasonal-desc { color: rgba(var(--paper-white-rgb),0.8); font-size: 0.9rem; margin: 0 0 var(--space-sm); }
   .seasonal-price { font-family: var(--font-heading); font-size: 1.4rem; color: var(--sepia); }
   .menu-grid { display: grid; gap: var(--space-xl); }
   @media (min-width: 768px) { .menu-grid { grid-template-columns: 1fr 1fr; } .menu-grid > :first-child { grid-column: 1 / -1; } }
-  .card-title { font-family: var(--font-heading); font-size: 1.5rem; margin: 0 0 var(--space-lg); display: flex; align-items: center; gap: var(--space-sm); }
-  .card-title-light { color: var(--paper-white); }
+  .card-title { font-family: var(--font-heading); font-size: 1.5rem; margin: 0 0 var(--space-lg); display: flex; align-items: center; gap: var(--space-sm); color: var(--deep-black); }
+  .card-title-light { color: var(--paper-white) !important; }
   .card-blot { color: var(--ink-rust); }
   .item-left { display: flex; align-items: flex-start; gap: var(--space-sm); flex: 1; min-width: 0; }
   .item-blot { color: var(--ink-rust); flex-shrink: 0; margin-top: 4px; }
-  .item-name { font-family: var(--font-heading); font-size: 1.1rem; }
+  .item-name { font-family: var(--font-heading); font-size: 1.1rem; color: var(--deep-black); }
+  .name-light { color: var(--paper-white) !important; }
   .item-desc { font-size: 0.85rem; color: var(--ash); margin: 2px 0 0; }
   .item-casual { padding: var(--space-md) 0; border-bottom: 1px dashed rgba(var(--ash-rgb),0.15); }
   .item-dark { border-bottom-color: rgba(255,255,255,0.06) !important; }
