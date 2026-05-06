@@ -1,10 +1,6 @@
 ---
-// VentWallSection.astro — Anonymous vent board with corkboard layout
-import TornEdge from './svg/TornEdge.astro';
----
 
 <section id="vent-wall" class="section section-paper ventwall-section">
-  <TornEdge direction="top" fill="var(--deep-black)" />
   <div class="ventwall-container">
     <h2 class="ventwall-title heading-tilt-left tear-in">
       <span class="ventwall-label font-mono">// zidul</span>
@@ -20,7 +16,7 @@ import TornEdge from './svg/TornEdge.astro';
         id="vent-textarea"
         class="vent-textarea"
         maxlength="140"
-        placeholder="Ce te macină azi? (max 140 caractere)"
+        placeholder="Ce te macină azi?"
         aria-label="Scrie un gând anonim"
       ></textarea>
       <div class="vent-form-footer">
@@ -41,7 +37,6 @@ import TornEdge from './svg/TornEdge.astro';
       </div>
     </div>
   </div>
-  <TornEdge direction="bottom" fill="var(--deep-black)" />
 </section>
 
 <style>
